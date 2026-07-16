@@ -1,0 +1,13 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Maven
+target/
+
+# Build folders
+out/
+
+# OS
+.DS_Store
+Thumbs.db
