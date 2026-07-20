@@ -39,7 +39,12 @@ public class PokemonService {
                 "Gyarados,235.0kg,6.5m,1.0,0.79,0.95,Water-Flying"
         };
 
-        createPokemons(concatenate(csvData, sampleData));
+        if (csvData != null && csvData.length > 0) {
+            createPokemons(csvData);
+        } else {
+            createPokemons(sampleData);
+        }
+
     }
     private String[] concatenate(String[] array1, String[] array2) {
         if (array1 == null) return array2 == null ? new String[0] : array2.clone();
