@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container mt-5 flex-grow-1">
+
+    <!-- Page heading -- replaces the desktop GRADE TRACKER MENU banner -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-primary">Grade Tracker Menu</h1>
+        <p class="lead text-muted">
+            LBYCPOB - OOP Laboratory
+        </p>
+        <hr>
+        <p class="text-secondary">
+            Students in session:
+            <strong th:text="${studentCount}">0</strong>
+            / <span th:text="${maxStudents}">20</span>
+        </p>
+    </div>
+
+    <!-- Flash messages from redirects -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- Menu cards -- one per original menu option -->
+    <div class="row g-4 justify-content-center">
+
+        <!-- Option 1: Enter Student Data -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+                    <div class="fs-1 mb-3">1</div>
+                    <h5 class="card-title fw-bold">Enter Student Data</h5>
+                    <p class="card-text text-muted small">
+                        Add students one by one. Provide name, ID, and all five
+                        grade components.
+                    </p>
+                    <a th:href="@{/students/enter}"
+                       class="btn btn-primary mt-auto"
+                       th:classappend="${repoFull} ? ' disabled' : ''">
+                        Enter Student Data
+                    </a>
+                    <div th:if="${repoFull}" class="text-danger small mt-2">
+                        Maximum capacity reached.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 2: View Report -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+                    <div class="fs-1 mb-3">2</div>
+                    <h5 class="card-title fw-bold">View Report</h5>
+                    <p class="card-text text-muted small">
+                        See the full grade table: ID, name, raw average, numeric
+                        grade, letter rank, and remarks.
+                    </p>
+                    <a th:href="@{/report}" class="btn btn-success mt-auto">
+                        View Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 3: Class Statistics -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+                    <div class="fs-1 mb-3">3</div>
+                    <h5 class="card-title fw-bold">Class Statistics</h5>
+                    <p class="card-text text-muted small">
+                        Highest, lowest, and class mean raw grades with letter
+                        tier rankings.
+                    </p>
+                    <a th:href="@{/stats}" class="btn btn-info mt-auto text-white">
+                        View Statistics
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 4: Verify ID -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+                    <div class="fs-1 mb-3">4</div>
+                    <h5 class="card-title fw-bold">Verify ID Number</h5>
+                    <p class="card-text text-muted small">
+                        Check whether an 8-digit ID number is valid and whether
+                        it belongs to a student or faculty member.
+                    </p>
+                    <a th:href="@{/verify}" class="btn btn-warning mt-auto">
+                        Verify ID
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 5: Clear Data (replaces "Exit" from the desktop) -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-danger">
+                <div class="card-body text-center p-4">
+                    <div class="fs-1 mb-3">5</div>
+                    <h5 class="card-title fw-bold text-danger">Clear All Data</h5>
+                    <p class="card-text text-muted small">
+                        Removes all students from this session. Equivalent to
+                        restarting the desktop application.
+                    </p>
+                    <form th:action="@{/students/clear}" method="post">
+                        <button type="submit" class="btn btn-outline-danger mt-auto"
+                                onclick="return confirm('Clear all student data? This cannot be undone.')">
+                            Clear Session
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /row -->
+
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

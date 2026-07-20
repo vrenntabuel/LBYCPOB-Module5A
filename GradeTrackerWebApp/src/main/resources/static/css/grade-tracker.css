@@ -1,0 +1,20 @@
+/*
+ * grade-tracker.css
+ * Minimal custom styles; Bootstrap handles the heavy lifting.
+ */
+
+body {
+    font-size: 0.95rem;
+}
+
+/* Monospace font for ID numbers and grade values */
+.font-monospace {
+    font-family: 'Consolas', 'Courier New', monospace;
+}
+
+/* Print: hide nav, footer, and buttons */
+@media print {
+    nav, footer, .btn, .alert { display: none !important; }
+    body { background: white !important; }
+    .card { border: 1px solid #dee2e6 !important; box-shadow: none !important; }
+}
