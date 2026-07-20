@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="pokemonCard(p)" class="pokemon-card"
+     th:style="'background:' + ${p.typeBackground} + ';'">
+
+    <div class="pokemon-number" th:text="'#0' + ${p.instanceId}">#001</div>
+
+    <div class="image-wrapper">
+        <img class="pokemon-image"
+             th:src="@{'/images/' + ${p.imageFileName}}"
+             th:alt="${p.name}"
+             th:attr="data-color=${p.typeBackground}, data-initial=${#strings.substring(p.name,0,1)}"
+             onerror="window.pokemonImageFallback(this)">
+    </div>
+
+    <hr class="separator">
+    <div class="pokemon-name" th:text="${p.name}">Name</div>
+    <hr class="separator">
+
+    <div class="basic-info">
+        <div class="info-label" th:text="'Weight: ' + ${p.weight} + ' kg'"></div>
+        <div class="info-label" th:text="'Height: ' + ${p.height} + ' m'"></div>
+        <div class="power-label"
+             th:text="'Power Level: ' + ${#numbers.formatDecimal(p.calculatePowerLevel(), 1, 1)}"></div>
+    </div>
+
+    <div class="type-box" th:if="${!p.dualType}"
+         th:style="'background:' + ${p.typeBackground} + ';'">
+        <span class="pokemon-type" th:text="${#strings.toUpperCase(p.type)}"></span>
+    </div>
+    <div class="type-box dual" th:if="${p.dualType}">
+        <div class="type-half" th:style="'background:' + ${p.typeBackground} + ';'">
+            <span class="pokemon-type" th:text="${p.firstType}"></span>
+        </div>
+        <div class="type-half" th:style="'background:' + ${p.secondBackground} + ';'">
+            <span class="pokemon-type" th:text="${p.secondType}"></span>
+        </div>
+    </div>
+
+    <hr class="separator">
+
+    <div class="stats-box">
+        <div class="stat-row">
+            <div class="stat-label" th:text="'ATTACK: ' + ${#numbers.formatDecimal(p.attack, 1, 2)}"></div>
+            <div class="stat-bar-bg"><div class="stat-bar attack"
+                                          th:style="'width:' + ${(p.attack lt 1.0 ? p.attack : 1.0) * 100} + '%;'"></div></div>
+        </div>
+        <div class="stat-row">
+            <div class="stat-label" th:text="'DEFENSE: ' + ${#numbers.formatDecimal(p.defense, 1, 2)}"></div>
+            <div class="stat-bar-bg"><div class="stat-bar defense"
+                                          th:style="'width:' + ${(p.defense lt 1.0 ? p.defense : 1.0) * 100} + '%;'"></div></div>
+        </div>
+        <div class="stat-row">
+            <div class="stat-label" th:text="'STAMINA: ' + ${#numbers.formatDecimal(p.stamina, 1, 2)}"></div>
+            <div class="stat-bar-bg"><div class="stat-bar stamina"
+                                          th:style="'width:' + ${(p.stamina lt 1.0 ? p.stamina : 1.0) * 100} + '%;'"></div></div>
+        </div>
+    </div>
+    <hr class="separator">
+</div>
+
+</body>
+</html>

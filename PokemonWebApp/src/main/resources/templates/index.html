@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LBYCPEI Pokémon App</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="root">
+
+    <!-- ===================== MENU PANEL ===================== -->
+    <aside class="menu-panel">
+        <h1 class="title-label">LBYCPEI Pokémon App</h1>
+        <hr class="separator">
+
+        <form th:action="@{/pokemon/search}" method="post" class="side-form">
+            <label class="section-label" for="searchName">Search Pokemon:</label>
+            <input class="input-field" type="text" id="searchName" name="name" placeholder="Enter Pokemon name...">
+            <button type="submit" class="action-button">Search Pokemon</button>
+        </form>
+        <hr class="separator">
+
+        <form th:action="@{/pokemon/remove}" method="post" class="side-form">
+            <label class="section-label" for="removeName">Remove Pokemon:</label>
+            <input class="input-field" type="text" id="removeName" name="name" placeholder="Enter Pokemon name to remove...">
+            <button type="submit" class="action-button">Remove Pokemon</button>
+        </form>
+        <hr class="separator">
+
+        <form th:action="@{/pokemon/random}" method="post">
+            <button type="submit" class="primary-button">View Random Pokemon</button>
+        </form>
+        <button type="button" id="slideshowBtn" class="primary-button">Start Slideshow</button>
+        <button type="button" id="musicToggleBtn" class="action-button"> Play Music</button>
+        <hr class="separator">
+
+        <img class="logo" th:src="@{/images/pokemon-logo.gif}" alt="Pokemon Logo"
+             onerror="this.style.display='none'">
+
+        <img class="pokeball" th:src="@{/images/pokeball.png}" alt="Pokeball"
+             onerror="this.style.display='none'">
+
+        <form th:action="@{/pokemon/exit}" method="get">
+            <button type="submit" class="quit-button">Exit</button>
+        </form>
+    </aside>
+
+    <!-- ===================== CARD PANEL ===================== -->
+    <main class="card-panel" id="cardPanel">
+
+        <div th:if="${message}" class="message-label" th:text="${message}"></div>
+
+        <!-- FIX: whole condition must be inside a single ${...} -->
+        <div th:if="${selectedPokemon != null}" id="selectedCardWrapper">
+            <div th:replace="~{fragments/pokemon-card :: pokemonCard(${selectedPokemon})}"></div>
+        </div>
+
+        <div th:if="${message == null and selectedPokemon == null}" class="welcome-label">
+            Welcome to LBYCPEI Pokémon Card Collection!
+        </div>
+
+        <!-- FIX: reference the fragment file, not "::" (this file) -->
+        <div id="slideshowDeck" style="display:none;">
+            <div class="slide" th:each="p : ${allPokemon}">
+                <div th:replace="~{fragments/pokemon-card :: pokemonCard(${p})}"></div>
+            </div>
+        </div>
+    </main>
+
+</div>
+<script th:src="@{/js/background-music-manager.js}"></script>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

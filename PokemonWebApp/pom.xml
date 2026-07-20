@@ -11,8 +11,8 @@
     <groupId>ph.edu.dlsu.lbycpob</groupId>
     <artifactId>PokemonWebApp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
-    <description>demo</description>
+    <name>PokemonWebApp</name>
+    <description>PokemonWebApp</description>
     <url/>
     <licenses>
         <license/>
@@ -38,7 +38,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -55,12 +54,7 @@
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -69,5 +63,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
