@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Verify ID')}"></head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container mt-4 flex-grow-1">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="fw-bold text-primary mb-0">Verify ID Number</h2>
+                <a th:href="@{/}" class="btn btn-outline-secondary btn-sm">Back to Menu</a>
+            </div>
+
+            <!--
+              Explanation panel -- replaces the console prompt text from
+              IDVerifier.verifyID() and IDVerifier.validateID()
+            -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-warning text-dark fw-bold">
+                    How ID Verification Works
+                </div>
+                <div class="card-body small text-muted">
+                    <p class="mb-1">The ID must satisfy three conditions:</p>
+                    <ol class="mb-0">
+                        <li>Exactly <strong>8 digits</strong> in length.</li>
+                        <li>All characters must be <strong>numeric digits</strong> (0-9).</li>
+                        <li>The <strong>dot product</strong> of the digits against descending
+                            weights [8, 7, 6, 5, 4, 3, 2, 1] must be
+                            <strong>divisible by 11</strong>.</li>
+                    </ol>
+                    <p class="mt-2 mb-0">
+                        Example: <code>11191031</code>
+                        &rarr; 1x8+1x7+1x6+9x5+1x4+0x3+3x2+1x1 = 66
+                        &rarr; 66 / 11 = 6 (student)
+                    </p>
+                </div>
+            </div>
+
+            <!-- Result alert (shown after a POST redirect) -->
+            <div th:if="${verifyResult}" class="alert alert-dismissible fade show"
+                 th:classappend="${isValid} ? ' alert-success' : ' alert-danger'">
+                <strong>ID: <span class="font-monospace" th:text="${verifiedId}"></span></strong><br>
+                <span th:text="${verifyResult}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- Input form -- replaces the do-while "Enter ID:" prompt -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white fw-bold">
+                    Enter an ID Number to Check
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/verify}" th:object="${verifyForm}"
+                          method="post" novalidate>
+
+                        <label class="form-label fw-semibold" for="idNumberInput">
+                            ID Number (8 digits)
+                        </label>
+                        <div class="input-group mb-3">
+                            <input type="text" id="idNumberInput"
+                                   th:field="*{idNumber}"
+                                   class="form-control font-monospace form-control-lg"
+                                   th:classappend="${#fields.hasErrors('idNumber')} ? ' is-invalid'"
+                                   maxlength="8"
+                                   placeholder="e.g. 11191031"
+                                   autocomplete="off">
+                            <button type="submit" class="btn btn-primary">
+                                Verify
+                            </button>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('idNumber')}"
+                                 th:errors="*{idNumber}">Error</div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div><!-- /col -->
+    </div><!-- /row -->
+
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

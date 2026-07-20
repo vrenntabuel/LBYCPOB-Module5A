@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Class Statistics')}"></head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container mt-4 flex-grow-1">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="fw-bold text-primary mb-0">Class Statistics Report</h2>
+        <a th:href="@{/}" class="btn btn-outline-secondary btn-sm">Back to Menu</a>
+    </div>
+
+    <!-- No data guard -- mirrors ReportPrinter "No data to process" message -->
+    <div th:unless="${hasData}" class="alert alert-warning">
+        Cannot compute statistics. Please
+        <a th:href="@{/students/enter}">enter student data</a> first.
+    </div>
+
+    <!-- Statistics cards -- replaces ReportPrinter.printClassStats() console output -->
+    <div th:if="${hasData}">
+
+        <!-- Summary row -->
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-4">
+                <div class="card text-bg-primary shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h6 class="card-title text-uppercase small mb-1">Total Students</h6>
+                        <div class="display-4 fw-bold"
+                             th:text="${stats.totalStudents}">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-bg-success shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h6 class="card-title text-uppercase small mb-1">Highest Raw Grade</h6>
+                        <div class="display-4 fw-bold"
+                             th:text="${#numbers.formatDecimal(stats.highestGrade,1,2)}">0.00</div>
+                        <p class="mb-0 small"
+                           th:text="${stats.highestName}">Name</p>
+                        <span class="badge bg-light text-dark mt-1"
+                              th:text="${stats.highestRank} + '-tier'">S-tier</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-bg-danger shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h6 class="card-title text-uppercase small mb-1">Lowest Raw Grade</h6>
+                        <div class="display-4 fw-bold"
+                             th:text="${#numbers.formatDecimal(stats.lowestGrade,1,2)}">0.00</div>
+                        <p class="mb-0 small"
+                           th:text="${stats.lowestName}">Name</p>
+                        <span class="badge bg-light text-dark mt-1"
+                              th:text="${stats.lowestRank} + '-tier'">F-tier</span>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /row -->
+
+        <!-- Class mean card -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-secondary text-white fw-bold">
+                Class Mean
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <span class="display-5 fw-bold"
+                              th:text="${#numbers.formatDecimal(stats.classMean,1,2)}">
+                            0.00
+                        </span>
+                    </div>
+                    <div class="col">
+                        <span class="badge fs-5"
+                              th:text="${stats.meanRank} + '-tier'"
+                              th:classappend="${stats.meanRank == 'S'} ? ' bg-success'
+                                           : (${stats.meanRank == 'A'} ? ' bg-primary'
+                                           : (${stats.meanRank == 'B'} ? ' bg-info'
+                                           : (${stats.meanRank == 'F'} ? ' bg-danger'
+                                           : ' bg-warning text-dark')))">
+                            ?-tier
+                        </span>
+                        <p class="text-muted small mt-1 mb-0">
+                            Average raw grade across all
+                            <strong th:text="${stats.totalStudents}">0</strong>
+                            student(s)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a th:href="@{/report}" class="btn btn-success">View Full Report</a>
+            <a th:href="@{/students/enter}" class="btn btn-outline-primary">Add More Students</a>
+        </div>
+
+    </div><!-- /th:if hasData -->
+
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<!--
+  layout.html
+  Shared page shell used by all pages via Thymeleaf fragment inclusion.
+  Replace the desktop ReportPrinter.printSeparatorLine() header banner.
+-->
+<head th:fragment="head(pageTitle)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | LBYCPOB Grade Tracker'">Grade Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link th:href="@{/css/grade-tracker.css}" rel="stylesheet">
+</head>
+
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/}">LBYCPOB Grade Tracker by Juan Dela Cruz</a>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/students/enter}">Enter Students</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/report}">Report</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/stats}">Statistics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/verify}">Verify ID</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<footer th:fragment="footer" class="footer mt-auto py-3 bg-primary text-white">
+    <div class="container text-center">
+        <small>De La Salle University - LBYCPOB OOP Laboratory</small>
+    </div>
+</footer>
+</html>
