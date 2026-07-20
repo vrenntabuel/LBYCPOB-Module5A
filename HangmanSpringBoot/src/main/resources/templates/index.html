@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark mb-0">
+    <div class="container">
+        <span class="navbar-brand fw-bold fs-4">LBYCPOB Hangman by Juan Dela Cruz</span>
+    </div>
+</nav>
+
+<!-- Hero -->
+<div class="bg-dark text-white py-5 mb-5">
+    <div class="container text-center">
+        <pre class="hangman-art-hero mx-auto mb-3 small">
+   +------------+          _______________
+   |         ___|___      | LET's PLAY!!! |
+   |        / X   X \   / \_______________/
+   |       |    0    |
+   |        \_______/
+   |            |
+   |      \\----+----//
+   |            |
+   |         __/ \__
+---+---
+        </pre>
+        <h1 class="display-4 fw-bold">Welcome to Hangman</h1>
+        <p class="lead text-white-50">
+            A classic word-guessing game. Pick a word list and start guessing!
+        </p>
+    </div>
+</div>
+
+<!-- Rules + Start form -->
+<div class="container">
+    <div class="row justify-content-center g-4">
+
+        <!-- Rules card -->
+        <div class="col-md-5">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">How to Play</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            &#10003; A secret word is chosen at random.
+                        </li>
+                        <li class="mb-2">
+                            &#10003; Click a letter button to guess it.
+                        </li>
+                        <li class="mb-2">
+                            &#10003; A correct guess reveals that letter in
+                            the word.
+                        </li>
+                        <li class="mb-2">
+                            &#10003; An incorrect guess adds a body part to
+                            the gallows.
+                        </li>
+                        <li class="mb-2">
+                            &#10003; You have <strong>8 incorrect guesses</strong>
+                            before the game is lost.
+                        </li>
+                        <li>
+                            &#10003; Reveal all letters before the man is
+                            hanged to win!
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start form card -->
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Start a New Game</h5>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/game/start}" method="post">
+
+                        <div class="mb-4">
+                            <label for="filename" class="form-label fw-semibold">
+                                Choose a word list:
+                            </label>
+                            <select id="filename" name="filename"
+                                    class="form-select form-select-lg fs-6">
+                                <option value="test.txt">
+                                    test.txt &mdash; Small list (easy to test)
+                                </option>
+                                <option value="words.txt" selected>
+                                    words.txt &mdash; Medium list
+                                </option>
+                                <option value="large.txt">
+                                    large.txt &mdash; Large list (harder)
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit"
+                                    class="btn btn-dark btn-lg fs-6">
+                                Play Now
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

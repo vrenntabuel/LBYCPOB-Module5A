@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" th:href="@{/}">LBYCPOB Hangman by Juan Dela Cruz</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card border-0 shadow">
+                <div class="card-header bg-dark text-white text-center py-3">
+                    <h4 class="mb-0">Session Statistics</h4>
+                </div>
+                <div class="card-body p-4">
+
+                    <table class="table table-borderless mb-4">
+                        <tbody>
+                        <tr>
+                            <td class="text-muted">Games Played</td>
+                            <td class="text-end fw-bold fs-5"
+                                th:text="${stats.gamesPlayed()}">0</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Games Won</td>
+                            <td class="text-end fw-bold fs-5 text-success"
+                                th:text="${stats.gamesWon()}">0</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Games Lost</td>
+                            <td class="text-end fw-bold fs-5 text-danger"
+                                th:text="${stats.gamesPlayed() - stats.gamesWon()}">0</td>
+                        </tr>
+                        <tr class="table-light">
+                            <td class="text-muted">Win Percentage</td>
+                            <td class="text-end fw-bold fs-4"
+                                th:text="${stats.formattedWinPercentage()}">0.00%</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Best Score</td>
+                            <td class="text-end fw-bold fs-5">
+                                <span th:text="${stats.bestGuessesRemaining()}">0</span>
+                                guess(es) remaining
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-muted small text-center mb-4">
+                        Statistics have been saved to
+                        <code>hangman_statistics.txt</code>.
+                        Thanks for playing!
+                    </p>
+
+                    <div class="d-grid">
+                        <a th:href="@{/}" class="btn btn-dark btn-lg">
+                            Play Again
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>
